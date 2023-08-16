@@ -2,19 +2,12 @@
 {% load static %}
 
 {% block contenido %}
-   
-
-<h1>Edita tu post!</h1>
-<br/><br/>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button class="btn btn-secondary">Guardar Cambios</button>
-
-</form>
-
-
-
-
-
+<div class="container">
+    <h1 class="mb-4">Agrega tu post</h1>
+    <form method="POST" class="mb-4" style="background-color: grey; padding: 20px;">
+        {% csrf_token %}
+        {{ form.as_ul }}
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </form>
+</div>
 {% endblock contenido %}

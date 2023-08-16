@@ -23,6 +23,7 @@
     <div class="container">
         <a class="navbar-brand text-white" href="{% url 'inicio' %}">Inicio</a>
         <a class="navbar-brand text-white" href="{% url 'about' %}">About</a>
+        {% if user.is_authenticated %}
         <div class="dropdown">
             <button class="navbar-brand btn btn-secondary dropdown-toggle text-white" type="button" id="postDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
                 Posts
@@ -32,17 +33,18 @@
                     <a class="dropdown-item text-white" href="{% url 'postmain' %}">Todos los posts</a>
                 </li>
                 <li>
-                    <a class="dropdown-item text-white" href="{% url 'autores' %}">Nuestros Autores</a>
+                    <a class="dropdown-item text-white" href="!#">Autores</a>
+                </li>
+                <li>
+                    <a class="dropdown-item text-white" href="{% url 'formulario_post' %}">Escribir Post</a>
                 </li>
             </ul>
         </div>
-        <a class="navbar-brand text-white" href="{% url 'formulario_post' %}">Escribir</a>
-        {% if user.is_authenticated %}
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <div style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
                     {% if user.userprofile.avatar %}
-                    <img src="{{ user.userprofile.avatar.url }}" style="width: 100%; height: 100%; border-radius: 50%;">
+                    <img src="!#" style="width: 100%; height: 100%; border-radius: 50%;">
                     {% else %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8"/>
@@ -53,25 +55,26 @@
             </button> 
             <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
                 <li>
-                    <a class="dropdown-item text-white" href="{% url 'miperfil' %}">Ver mi Perfil</a>
+                    <a class="dropdown-item text-white" href="!#">Ver mi Perfil</a>
                 </li>
                 <li>
                     <a class="dropdown-item text-white" href="{% url 'detalle_post' request.user.id %}">Mis Posts</a>
                 </li>         
                 <li>
-                        <a class="dropdown-item text-white" href="{% url 'editar_perfil' %}">Editar Perfil</a>
+                        <a class="dropdown-item text-white" href="!#">Editar Perfil</a>
                 </li>
                 <li>
                     <a class="dropdown-item text-white" href="{% url 'logout' %}"><strong>Cerrar Sesión</strong></a>
                 </li>
                 <li>
-                    <a class="dropdown-item text-white" style="color: red;" href="{% url 'borrar_usuario' %}"><strong>Borrar Usuario</strong></a>
+                    <a class="dropdown-item text-white" style="color: red;" href="!#"><strong>Borrar Usuario</strong></a>
                 </li>
             </ul>
         </div>
         {% else %}
-        <a class="navbar-brand" href="{% url 'login' %}" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none; margin-right: 10px;">Iniciar Sesión</a>
-        <a class="navbar-brand" href="{% url 'registro' %}" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none;">Registrarse</a>
+        <a class="btn btn-primary" href="{% url 'login' %}">Iniciar Sesión</a>
+
+        <a class="btn btn-primary" href="{% url 'registro' %}">Registrarse</a>
         {% endif %}
     </div>
 </nav>

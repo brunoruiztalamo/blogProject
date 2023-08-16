@@ -1,0 +1,22 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido %}
+   
+
+<h1>Borrar Post?</h1>
+<br/><br/>
+<h3>Borrar "{{ post.title }} - {{ post.header }}"?</h3>
+<br/>
+<form method="POST">
+    {% csrf_token %}
+    <strong>Estas seguro de esto? Esto no se puede deshacer.</strong><br/>
+    <button class="btn btn-secondary">Borrar post! </button>
+</form><br/>
+
+
+
+
+
+
+{% endblock contenido %}

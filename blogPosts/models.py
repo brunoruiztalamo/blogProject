@@ -6,6 +6,8 @@ from django.urls import reverse
 # Create your models here.
 
 
+
+
 class Categoria(models.Model):
     nombre_categoria = models.CharField(max_length=50, db_column="Nombre")
     descripcion_categoria = models.CharField(max_length=200, db_column="Descripcion")
@@ -19,16 +21,15 @@ class Categoria(models.Model):
         return self.id
 
 
+
+
 class Post(models.Model):
-    title = models.CharField(default='No Title', max_length=100)
-    header = models.CharField(default = 'No subtitle', max_length=100)
+    title = models.CharField(default='#Título', max_length=100)
+    header = models.CharField(default = '#subtítulo', max_length=100)
     timestamp = models.DateTimeField(default=timezone.now())
-    content = models.TextField(default='No Content', max_length=10000, blank=True)
+    content = models.TextField(default='#Contenido', max_length=10000, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='posts/')
-    
-    class Meta:
-        ordering = ['-timestamp']
     
     def __str__(self):
         return f' {self.title} - Usuario: {self.user}'
@@ -36,6 +37,9 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('detalle_post', args=(str(self.id)))
     
+
+
+
     
 class Comentario(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)

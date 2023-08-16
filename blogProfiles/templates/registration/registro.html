@@ -1,0 +1,23 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Registro{% endblock %}
+
+{% block contenido %}
+   
+<h1>Registrate con Nosotros!</h1>
+<br/><br/>
+
+<div class="form-group">
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-secondary">Registrarse</button>
+
+</form>
+</div>
+
+
+
+
+{% endblock contenido %}
