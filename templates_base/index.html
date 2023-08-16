@@ -40,9 +40,9 @@
         {% if user.is_authenticated %}
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-                <div style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; background-color: {% if user_profile.avatar.imagen.url %}transparent{% else %}#ccc{% endif %};">
-                    {% if user.avatar.imagen.url %}
-                    <img src="{{ user.userprofile.imagen.url }}" style="width: 100%; height: 100%; border-radius: 50%;">
+                <div style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
+                    {% if user.userprofile.avatar %}
+                    <img src="{{ user.userprofile.avatar.url }}" style="width: 100%; height: 100%; border-radius: 50%;">
                     {% else %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8"/>

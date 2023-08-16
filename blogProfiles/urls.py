@@ -3,6 +3,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from .views import login_view, ProfileView, autores, CustomLogoutView, UserRegisterView, UserUpdateView, userDeleteView
 
+
 urlpatterns = [
     path('registro/', UserRegisterView.as_view(), name="registro"),
     path('login/', login_view, name="login"),

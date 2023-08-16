@@ -24,7 +24,7 @@ class Post(models.Model):
     header = models.CharField(default = 'No subtitle', max_length=100)
     timestamp = models.DateTimeField(default=timezone.now())
     content = models.TextField(default='No Content', max_length=10000, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='posts/')
     
     class Meta:
@@ -38,7 +38,7 @@ class Post(models.Model):
     
     
 class Comentario(models.Model):
-    post = models.OneToOneField(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
     comment = models.CharField(max_length=1000)
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     timestamp = models.DateTimeField(default=timezone.now())
