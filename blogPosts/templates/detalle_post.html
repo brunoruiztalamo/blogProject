@@ -1,0 +1,7 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block contenido %}
+<h1>{{ post.title }}</h1><br/>
+<small>By: {{ post.user.first_name }} {{ post.user.last.name }}</small><br/>
+{% endblock contenido %}

@@ -1,0 +1,18 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido %}
+<h1>Posts:</h1>
+<ul>
+{% for post in object_list %}
+
+    <li><a href="{% url 'detalle_post' post.id %}"><strong>Titulo: {{ post.title }}</strong></a>  -  By: {{ post.user.first_name }} {{ post.user.last_name }}<br/>
+    <strong>Encabezado:</strong> {{ post.header }}<br/>
+    <strong>Contenido:</strong> {{ post.content }}<br/>
+    <strong>Fecha:</strong> {{ post.timestamp }}</li>
+    <br/>
+{% endfor %}
+</ul>
+
+
+{% endblock contenido %}

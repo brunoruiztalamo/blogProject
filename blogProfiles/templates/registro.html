@@ -1,0 +1,31 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block contenido %}
+<section class="content-block" style="padding: 4rem 3rem;">
+    <div class="container px-4 px-lg-5">
+        <div class="row gx-4 gx-lg-5 justify-content-center">
+            <div class="col-md-10 col-lg-8 col-xl-7">
+                <h2 class="text-center">Registrate!</h2>
+                <form method="post" style="max-width: 500px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); justify-content: left;">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <div style="text-align: center;">
+                        <input type="submit" value="Guardar" style="padding: 8px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 14px;">
+                    </div>
+                </form>
+                <div style="max-width: 300px; margin: 20px auto;">
+                    {% for message in messages %}
+                    <p style="color: red; font-size: 12px;">{{ message }}</p>
+                {% endfor %}
+                
+                {% for message in messages %}
+                    <p style="color: green; font-size: 12px;">{{ message }}</p>
+                {% endfor %}
+                
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock contenido %}

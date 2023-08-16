@@ -1,0 +1,146 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Blog</title>
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
+</head>
+<body>
+<!-- Navigation-->
+<nav class="navbar navbar-light bg-secondary static-top">
+    <div class="container">
+        <a class="navbar-brand text-white" href="{% url 'inicio' %}">Inicio</a>
+        <a class="navbar-brand text-white" href="{% url 'about' %}">About</a>
+        <div class="dropdown">
+            <button class="navbar-brand btn btn-secondary dropdown-toggle text-white" type="button" id="postDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                Posts
+            </button>
+            <ul class="dropdown-menu bg-secondary" aria-labelledby="postDropdownButton">
+                <li>
+                    <a class="dropdown-item text-white" href="{% url 'postmain' %}">Todos los posts</a>
+                </li>
+                <li>
+                    <a class="dropdown-item text-white" href="{% url 'autores' %}">Nuestros Autores</a>
+                </li>
+            </ul>
+        </div>
+        <a class="navbar-brand text-white" href="{% url 'formulario_post' %}">Escribir</a>
+        {% if user.is_authenticated %}
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                <div style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; margin-right: 10px; background-color: {% if user_profile.avatar.imagen.url %}transparent{% else %}#ccc{% endif %};">
+                    {% if user.avatar.imagen.url %}
+                    <img src="{{ user.userprofile.imagen.url }}" style="width: 100%; height: 100%; border-radius: 50%;">
+                    {% else %}
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                        <circle cx="8" cy="8" r="8"/>
+                    </svg>
+                    {% endif %}
+                </div>
+                <span style="vertical-align: middle; line-height: 30px;">{{ user.username }}</span>              
+            </button> 
+            <ul class="dropdown-menu bg-secondary" aria-labelledby="dropdownMenuButton1">
+                <li>
+                    <a class="dropdown-item text-white" href="{% url 'miperfil' %}">Ver mi Perfil</a>
+                </li>
+                <li>
+                    <a class="dropdown-item text-white" href="{% url 'detalle_post' post.id %}">Mis Posts</a>
+                </li>         
+                <li>
+                        <a class="dropdown-item text-white" href="{% url 'editar_perfil' %}">Editar Perfil</a>
+                </li>
+                <li>
+                    <a class="dropdown-item text-white" href="{% url 'logout' %}"><strong>Cerrar Sesión</strong></a>
+                </li>
+                <li>
+                    <a class="dropdown-item text-white" style="color: red;" href="{% url 'borrar_usuario' %}"><strong>Borrar Usuario</strong></a>
+                </li>
+            </ul>
+        </div>
+        {% else %}
+        <a class="navbar-brand" href="{% url 'login' %}" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none; margin-right: 10px;">Iniciar Sesión</a>
+        <a class="navbar-brand" href="{% url 'registro' %}" style="background-color: #007bff; color: white; padding: 10px 20px; border: none; border-radius: 5px; text-decoration: none;">Registrarse</a>
+        {% endif %}
+    </div>
+</nav>
+<!-- Page Header-->
+        <!-- Page Header-->
+        <header class="masthead" style="background-image: url('assets/img/home-bg.jpg'); background-size: cover; background-position: center; height: 60vh; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); display: flex; align-items: center; justify-content: center; color: white; text-align: center;">
+            <div class="container position-relative px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <div class="site-heading">
+                            <h1>Blogify</h1>
+                            <span class="subheading">Una página de Blog</span>
+                        </div>
+                    </div>
+                </div>
+                <section class="mb-4">
+                    <div class="container px-4 px-lg-5">
+                        <div class="row gx-4 gx-lg-5 justify-content-center">
+                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                <p style="text-align:center;"><strong>Bienvenidos a Blogify!</strong></p>
+                            </div>
+                        </div>
+                    </div>
+                </section>       
+            </div>
+        </header>
+        <section class="content-block" style="padding:4rem 3rem;">
+            {% block contenido %}
+            {% endblock contenido %}
+        </section>
+        <!-- Footer-->
+        <footer class="border-top">
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <ul class="list-inline text-center">
+                            <li class="list-inline-item">
+                                <a href="https://twitter.com/brunoruiztalamo">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-twitter fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://facebook.com/bruno.r.talamo">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-facebook-f fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                            <li class="list-inline-item">
+                                <a href="https://github.com/brunoruiztalamo">
+                                    <span class="fa-stack fa-lg">
+                                        <i class="fas fa-circle fa-stack-2x"></i>
+                                        <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                                    </span>
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="small text-center text-muted fst-italic">Copyright &copy; Todos los derechos a la Scaloneta y a Lionel Messi</div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script src="{% static 'js/scripts.js' %}"></script>
+    </body>
+</html>

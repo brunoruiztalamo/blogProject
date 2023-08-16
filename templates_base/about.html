@@ -1,0 +1,30 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido %}
+    <section class="about-me content-block" style="background-color: #f9f9f9; padding: 50px 0;">
+        <div class="container" style="max-width: 800px; margin: 0 auto;">
+            <h1 class="aboutme-title" style="font-size: 2.5rem; text-align: center; margin-bottom: 30px;">Sobre mí</h1>
+            <div class="profile-image" style="padding: 5px; border-radius: 5px; text-align: center;">
+                <img src="{% static 'images/aboutme.jpg' %}" style="max-width: 100%; height: auto; border-radius: 5px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+            </div>
+            <div class="caja-contenido" style="margin-top: 30px; line-height: 1.6;">
+                <p>
+                    Hola! Mi nombre es Bruno Ruiz Talamo, soy un estudiante de coderhouse, comisión 55350.
+                </p>
+                <p>
+                    Tengo 31 años, soy de Mar del Plata, Argentina y soy el creador de esta página.
+                </p>
+                <p>
+                    Sean bienvenido/as a Blogify! Una página creada con el poder de Django y Python
+                </p>
+                <p>
+                    Es un boceto de página de blog formato CRUD con posibilidad de hasta subir tu imagen de usuario o post!
+                </p>
+                <p>
+                    Espero que disfruten el contenido. ¡Gracias por su tiempo!
+                </p>
+            </div>
+        </div>
+    </section>
+{% endblock contenido %}

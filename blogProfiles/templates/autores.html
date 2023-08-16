@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Lista de Perfiles de Usuario</h2>
+<ul>
+    {% for user_profile in user_profiles %}
+    <li>
+        <strong>Nombre de Usuario:</strong> {{ user_profile.user.username }}<br>
+        <strong>Nombre:</strong> {{ user_profile.user.first_name }}<br>
+        <strong>Apellido:</strong> {{ user_profile.user.last_name }}
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
