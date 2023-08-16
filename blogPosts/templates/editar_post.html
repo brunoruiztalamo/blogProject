@@ -1,0 +1,20 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block contenido %}
+   
+
+<h1>Edita tu post!</h1>
+<br/><br/>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button class="btn btn-secondary">Guardar Cambios</button>
+
+</form>
+
+
+
+
+
+{% endblock contenido %}

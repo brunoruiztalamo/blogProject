@@ -4,4 +4,6 @@
 {% block contenido %}
 <h1>{{ post.title }}</h1><br/>
 <small>By: {{ post.user.first_name }} {{ post.user.last.name }}</small><br/>
+<p>{{ post.content }}</p>
+<img src="{{ post.image.url }}" alt="Imagen del post">
 {% endblock contenido %}

@@ -56,7 +56,7 @@
                     <a class="dropdown-item text-white" href="{% url 'miperfil' %}">Ver mi Perfil</a>
                 </li>
                 <li>
-                    <a class="dropdown-item text-white" href="{% url 'detalle_post' post.id %}">Mis Posts</a>
+                    <a class="dropdown-item text-white" href="{% url 'detalle_post' request.user.id %}">Mis Posts</a>
                 </li>         
                 <li>
                         <a class="dropdown-item text-white" href="{% url 'editar_perfil' %}">Editar Perfil</a>

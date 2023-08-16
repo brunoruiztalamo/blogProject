@@ -1,5 +1,5 @@
 from .models import Post
-from django.views.generic import DetailView, ListView, CreateView
+from django.views.generic import DetailView, ListView, CreateView, UpdateView
 # Create your views here.
 
 #Vista general de posts
@@ -21,3 +21,11 @@ class AddPostView(CreateView):
 class PostView(DetailView):
     model = Post
     template_name = 'detalle_post.html'
+
+
+
+#Vista para editar mi post
+class PostUpdateView(UpdateView):
+    model = Post
+    template_name = 'detalle_post.html'
+    fields = ['title', 'header', 'content', 'image']

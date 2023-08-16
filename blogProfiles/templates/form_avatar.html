@@ -1,0 +1,20 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block contenido %}
+<h3>Subir tu Avatar</h3>
+<form method="post" enctype="multipart/form-data">
+ {% csrf_token %}
+ {{ form.as_p }}
+ <input type="submit" value="Subir imagen"/>
+</form>
+
+{% if user_profile.avatar.imagen %}
+  <h3>Avatar Actual</h3>
+  <img src="{{ user_profile.avatar.imagen.url }}" alt="Avatar actual" style="width: 150px; height: 150px; border-radius: 50%;">
+{% else %}
+  <p>No hay imagen de avatar cargada.</p>
+{% endif %}
+
+{% endblock contenido %}
+
