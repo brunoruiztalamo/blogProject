@@ -16,12 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from .views import about, inicio
+from .views import about, InicioView
 from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('', inicio, name="inicio"),
+    path('', InicioView.as_view(), name="inicio"),
     path('about/', about, name="about"),
     path('posts/', include("blogPosts.urls")),
     path('profiles/', include('django.contrib.auth.urls')),

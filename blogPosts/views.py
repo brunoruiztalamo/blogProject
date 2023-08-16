@@ -20,7 +20,7 @@ class AddPostView(CreateView):
     form_class = formularioPost
     template_name = 'formulario_post.html'
     #fields = '__all__'
-
+    
 
 
 #Vista para ver un post
