@@ -1,15 +1,24 @@
-{% extends "index.html" %}
+{% extends 'index.html' %}
 {% load static %}
 
-{% block content %}
-<h2>Lista de Perfiles de Usuario</h2>
-<ul>
-    {% for user_profile in user_profiles %}
-    <li>
-        <strong>Nombre de Usuario:</strong> {{ user_profile.user.username }}<br>
-        <strong>Nombre:</strong> {{ user_profile.user.first_name }}<br>
-        <strong>Apellido:</strong> {{ user_profile.user.last_name }}
-    </li>
-    {% endfor %}
-</ul>
-{% endblock %}
+{% block contenido %}
+<div style="padding: 20px;">
+    <h2>Lista de Perfiles de Usuario</h2>
+    <ul style="list-style-type: none; padding: 0;">
+        {% for profile in object_list %}
+        <li style="background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; align-items: center;">
+            <div style="flex: 1;">
+                <strong>Nombre de Usuario:</strong> {{ profile.user.username }}<br/>
+                <strong>Nombre:</strong> {{ profile.user.first_name }}<br/>
+                <strong>Apellido:</strong> {{ profile.user.last_name }}<br/>
+                <strong>Bio:</strong> {{ profile.bio }}<br/>
+                <strong>Email:</strong> {{ profile.email }}
+            </div>
+            <div style="flex: 0;">
+                <img src="{{ profile.avatar.url }}" alt="Avatar" style="max-width: 100px; max-height: 100px; border-radius: 5px;">
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock contenido %}
