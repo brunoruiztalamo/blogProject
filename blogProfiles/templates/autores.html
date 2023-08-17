@@ -12,7 +12,8 @@
                 <strong>Nombre:</strong> {{ profile.user.first_name }}<br/>
                 <strong>Apellido:</strong> {{ profile.user.last_name }}<br/>
                 <strong>Bio:</strong> {{ profile.bio }}<br/>
-                <strong>Email:</strong> {{ profile.email }}
+                <strong>Email:</strong> {{ profile.email }}<br/>
+                <a href="{% url 'posts_list' profile.pk %}"><strong style="color: blue;">Ver Posts</strong></a>
             </div>
             <div style="flex: 0;">
                 <img src="{{ profile.avatar.url }}" alt="Avatar" style="max-width: 100px; max-height: 100px; border-radius: 5px;">

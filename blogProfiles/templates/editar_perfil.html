@@ -6,7 +6,7 @@
     <div style="text-align: left; width: 50%; border: 1px solid #ccc; box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); padding: 20px; border-radius: 5px;">
         <h2>Agrega más datos!</h1>
         <br/>
-        <form style="justify-content: left;" method="post">
+        <form style="justify-content: left;" method="POST" enctype="multipart/form-data">
             <h5>Tus datos actuales:</h5>
             <p style="justify-content: left;">Nombre: <strong>{{ user.first_name }}</strong></p>
             <p style="justify-content: left;">Apellido: <strong>{{ user.last_name }}</strong></p>

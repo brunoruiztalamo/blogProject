@@ -1,14 +1,12 @@
 from django import forms
 from .models import Categoria, Post, Comentario
-from django.contrib.auth.models import User
 
 
 class formularioPost(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['user', 'title', 'header', 'timestamp', 'content', 'image']
+        fields = ['title', 'header', 'timestamp', 'content', 'image']
         labels = {
-            'user': 'Autor',
             'title': 'Título',
             'header': 'Encabezado',
             'timestamp': 'Fecha y Hora',
@@ -22,7 +20,6 @@ class formularioPost(forms.ModelForm):
             'content': forms.Textarea(attrs={'class': 'form-control', 'style': 'height: 200px;'}),
             'image': forms.FileInput(attrs={'class': 'form-control'}),
         }
-        
         
         
         
