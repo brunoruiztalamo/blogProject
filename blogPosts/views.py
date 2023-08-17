@@ -11,7 +11,7 @@ from django.contrib.auth.models import User
 
 
 
-#Vista general de posts
+# Vista general de posts
 class PostMain(ListView):
     model = Post
     template_name = 'postmain.html'
@@ -24,13 +24,9 @@ class PostMain(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        # Obtener el perfil del usuario actual
         user_profile = Profile.objects.get(user=self.request.user)
-        
-        # Obtener todos los perfiles
         all_profiles = Profile.objects.all()
-        
+
         context['user_profile'] = user_profile
         context['all_profiles'] = all_profiles
         context['profile_data'] = {
@@ -39,6 +35,8 @@ class PostMain(ListView):
             # Agregar más campos si es necesario
         }
         
+        context['avatar_url'] = user_profile.avatar.url  # Agrega esta línea para el avatar
+
         return context
 
 

@@ -89,6 +89,8 @@ class UserProfileView(DetailView):
         context['previous_page'] = self.request.META.get('HTTP_REFERER')
         return context
 
+
+
 #borrar usuario
 class UserDeleteView(LoginRequiredMixin, DeleteView):
     model = User  # Cambia el modelo a User
