@@ -2,7 +2,7 @@ from django.shortcuts import render
 from .models import Post
 from .forms import formularioEdicion, formularioPost
 from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from blogProfiles.models import Profile
 from django.db.models import Q
@@ -51,15 +51,18 @@ class AddPostView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         form.instance.user = self.request.user
-        form.instance.image = self.request.FILES.get('image')  # Manually set the image field
-        return super().form_valid(form)
+        form.instance.image = self.request.FILES.get('image')
+        response = super().form_valid(form)
+        return response
+    
+    def get_success_url(self):
+        return reverse('detalle_post', args=[self.object.pk])
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         profile = Profile.objects.get(user=self.request.user)
         context['profile'] = profile
         return context
-
     
 
 #Vista para ver mis post
@@ -146,8 +149,7 @@ class PostView(LoginRequiredMixin, DetailView):
         post = self.object
 
         context['user_profile'] = user_profile
-        context['user_avatar_url'] = user_profile.avatar.url
-        context['previous_page'] = self.request.META.get('HTTP_REFERER')
+        context['user_avatar_url'] = user_profile.avatar.url  # Verifica esta línea
 
         if post.image:  # Verifica si el post tiene una imagen
             context['post_image_url'] = post.image.url
