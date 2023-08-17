@@ -21,20 +21,21 @@ class ProfileForm(forms.ModelForm):
     }
 
 class ProfileEditForm(forms.ModelForm):
-    model = Profile
-    fields = ['bio', 'email', 'avatar']
-    labels = {
+    class Meta:
+        model = Profile
+        fields = ['bio', 'email', 'avatar']
+        labels = {
+            
+            'bio':'Bio',
+            'email':'Email',
+            'avatar':'Avatar'   
+        }   
+        widgets = {
+            
+        'bio': forms.Textarea(attrs={'class': 'form-control', 'style': 'font-weight: bold;'}),
+        #'email': forms.EmailField(),
+        'Avatar': forms.FileInput(attrs={'class': 'form-control'}),
         
-        'bio':'Bio',
-        'email':'Email',
-        'avatar':'Avatar'   
-    }   
-    widgets = {
-        
-    'bio': forms.Textarea(attrs={'class': 'form-control', 'style': 'font-weight: bold;'}),
-    'email': forms.EmailField(),
-    'Avatar': forms.FileInput(attrs={'class': 'form-control'}),
-    
-    }
+        }
 
 

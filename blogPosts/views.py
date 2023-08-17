@@ -28,11 +28,15 @@ class AddPostView(LoginRequiredMixin, CreateView):
 
 
 
-#Vista para ver un post
-class PostView(DetailView):
+#Vista para ver mis post
+class PostListView(ListView):
     model = Post
-    template_name = 'detalle_post.html'
-
+    template_name = 'detalle_posts.html'  # Nombre de tu plantilla HTML
+    context_object_name = 'posts'
+    
+    def get_queryset(self):
+        # Filtrar los posts por el usuario actual
+        return Post.objects.filter(user=self.request.user)
 
 
 #Vista para editar post
@@ -49,3 +53,9 @@ class PostDeleteView(DeleteView):
     model = Post
     template_name = 'borrar_post.html'
     success_url = reverse_lazy('postmain')
+    
+    
+class PostView(DetailView):
+    model = Post
+    template_name = 'detalle_post.html'
+    context_object_name = 'post'

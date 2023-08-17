@@ -43,13 +43,13 @@
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <div style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">
-                    {% if user.profile.avatar %}
-                    <img src="{{ profile.avatar.url }}" style="width: 100%; height: 100%; border-radius: 50%;">
-                    {% else %}
+                    {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" alt="Avatar" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                {% else %}
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
                         <circle cx="8" cy="8" r="8"/>
                     </svg>
-                    {% endif %}
+                {% endif %}
                 </div>
                 <span style="vertical-align: middle; line-height: 30px;">{{ user.username }}</span>              
             </button> 
@@ -58,10 +58,10 @@
                     <a class="dropdown-item text-white" href="{% url 'miperfil' %}">Ver mi Perfil</a>
                 </li>
                 <li>
-                    <a class="dropdown-item text-white" href="{% url 'detalle_post' request.user.id %}">Mis Posts</a>
+                    <a class="dropdown-item text-white" href="{% url 'detalle_posts' %}">Mis Posts</a>
                 </li>         
                 <li>
-                        <a class="dropdown-item text-white" href="{% url 'editar_perfil' %}">Editar Perfil</a>
+                        <a class="dropdown-item text-white" href="{% url 'editar_perfil' request.user.id %}">Editar Perfil</a>
                 </li>
                 <li>
                     <a class="dropdown-item text-white" href="{% url 'logout' %}"><strong>Cerrar Sesión</strong></a>

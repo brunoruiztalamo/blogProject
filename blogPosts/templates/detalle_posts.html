@@ -1,0 +1,32 @@
+{% extends "index.html" %}
+{% load static %}
+
+{% block contenido %}
+    <h1>Mis Posts:</h1>
+    <ul style="list-style-type: none; padding: 0;">
+        {% for post in posts %}
+            <li style="background-color: #f5f5f5; border: 1px solid #ddd; border-radius: 5px; padding: 15px; margin-bottom: 20px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); display: flex; position: relative;">
+                <div style="flex: 1;">
+                    <h2><a style="color: blue;" href="{% url 'detalle_post' post.pk %}">{{ post.title }}</a></h2>
+                    <small>Fecha: {{ post.timestamp }}</small><br/>
+                    By: {{ post.user.first_name }} {{ post.user.last_name }}<br/>
+                    <p>{{ post.content }}</p>
+                </div>
+                <div style="position: absolute; top: 10px; right: 10px;">
+                    <img src="{{ post.image.url }}" alt="Avatar" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
+                </div>
+                {% if user.is_authenticated %}
+                    <div style="position: absolute; bottom: 10px; right: 10px;">
+                        <button class="btn btn-primary" href="{% url 'editar_post' post.pk %}" style="color: blue; margin-right: 10px;"><small style="color: white;">Editar</small></button>
+                        <button class="btn btn-danger" href="{% url 'borrar_post' post.pk %}" style="color: red;"><small style="color: white;">Borrar</small></button>
+                    </div>
+                {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock contenido %}
+
+
+
+
+
