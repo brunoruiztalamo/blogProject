@@ -10,3 +10,10 @@ class Profile(models.Model):
     
     def __str__(self):
         return f'{self.user} - Profile'
+    
+    @property
+    def get_photo_url(self):
+        if self.photo and hasattr(self.photo, 'url'):
+            return self.photo.url
+        else:
+            return "media/avatars/cachorrito.jpeg"

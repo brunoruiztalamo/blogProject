@@ -48,9 +48,10 @@ class AddPostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = formularioPost
     template_name = 'formulario_post.html'
-
+    
     def form_valid(self, form):
         form.instance.user = self.request.user
+        form.instance.image = self.request.FILES.get('image')  # Manually set the image field
         return super().form_valid(form)
     
     def get_context_data(self, **kwargs):
@@ -59,6 +60,7 @@ class AddPostView(LoginRequiredMixin, CreateView):
         context['profile'] = profile
         return context
 
+    
 
 #Vista para ver mis post
 class PostListView(LoginRequiredMixin, ListView):
@@ -80,7 +82,7 @@ class PostListView(LoginRequiredMixin, ListView):
         return context
 
 
-
+#Vista para el widget de buscar
 class SearchView(TemplateView):
     template_name = 'buscar.html'
 
@@ -120,48 +122,49 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     form_class = formularioEdicion
     template_name = 'editar_post.html'
     
-    def get_queryset(self):
-        return Post.objects.filter(user=self.request.user)
-
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        form.instance.image = self.request.FILES.get('image')
+        return super().form_valid(form)
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['profile'] = Profile.objects.get(user=self.request.user)
-        context['previous_page'] = self.request.META.get('HTTP_REFERER')
-
+        profile = Profile.objects.get(user=self.request.user)
+        context['profile'] = profile
         return context
     
     
-#Vista oara ver detakke de un post    
+#Vista para ver detalle de un post    
 class PostView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'detalle_post.html'
     context_object_name = 'post'
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        # Obtener el perfil del usuario actual
         user_profile = Profile.objects.get(user=self.request.user)
-        
-        # Obtener el post específico usando el objeto self.object (provisto por DetailView)
         post = self.object
-        
+
         context['user_profile'] = user_profile
-        context['post_image_url'] = post.image.url
         context['user_avatar_url'] = user_profile.avatar.url
         context['previous_page'] = self.request.META.get('HTTP_REFERER')
 
-        # Agregar datos del perfil para mostrar en el template
+        if post.image:  # Verifica si el post tiene una imagen
+            context['post_image_url'] = post.image.url
+        else:
+            context['post_image_url'] = None
+
         context['profile_data'] = {
             'first_name': user_profile.user.first_name,
             'last_name': user_profile.user.last_name,
             # Agregar más campos si es necesario
         }
-        
+
         return context
+
     
     
- #Vista para ver mis posts   
+ #Vista para ver todos los posts de un usuario   
 class UserPostsListView(LoginRequiredMixin, ListView):
     template_name = 'posts_list.html'
     context_object_name = 'posts_list'
