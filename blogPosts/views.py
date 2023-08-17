@@ -1,11 +1,12 @@
 from django.shortcuts import render
 from .models import Post
 from .forms import formularioEdicion, formularioPost
-from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin
 from blogProfiles.models import Profile
-
+from django.db.models import Q
+from django.contrib.auth.models import User
 # Create your views here.
 
 
@@ -80,6 +81,23 @@ class PostListView(LoginRequiredMixin, ListView):
 
 
 
+class SearchView(TemplateView):
+    template_name = 'buscar.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        query = self.request.GET.get('q')
+        
+        if query:
+            profile_results = Profile.objects.filter(Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query) | Q(bio__icontains=query))
+            post_results = Post.objects.filter(Q(title__icontains=query) | Q(header__icontains=query) | Q(content__icontains=query))
+            context['search_results'] = {'profiles': profile_results, 'posts': post_results}
+            context['query'] = query
+        
+        return context
+
+
+
 # Vista para borrar post
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
@@ -94,6 +112,8 @@ class PostDeleteView(LoginRequiredMixin, DeleteView):
         context['profile'] = Profile.objects.get(user=self.request.user)
         return context
 
+
+
 # Vista para editar post
 class PostUpdateView(LoginRequiredMixin, UpdateView):
     model = Post
@@ -106,10 +126,12 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['profile'] = Profile.objects.get(user=self.request.user)
+        context['previous_page'] = self.request.META.get('HTTP_REFERER')
+
         return context
     
     
-    
+#Vista oara ver detakke de un post    
 class PostView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'detalle_post.html'
@@ -127,7 +149,8 @@ class PostView(LoginRequiredMixin, DetailView):
         context['user_profile'] = user_profile
         context['post_image_url'] = post.image.url
         context['user_avatar_url'] = user_profile.avatar.url
-        
+        context['previous_page'] = self.request.META.get('HTTP_REFERER')
+
         # Agregar datos del perfil para mostrar en el template
         context['profile_data'] = {
             'first_name': user_profile.user.first_name,

@@ -3,11 +3,13 @@
 
 {% block contenido %}
 <div class="container">
-    <h1 class="mb-4">Agrega tu post</h1>
+    <h1 class="mb-4">Edita tu post!</h1>
     <form method="POST" class="mb-4" style="background-color: #f8f9fa; border-radius: 8px; padding: 20px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);">
         {% csrf_token %}
         {{ form.as_ul }}
         <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{{ previous_page }}" class="btn btn-secondary mt-3">Volver</a>
+
     </form>
 </div>
 {% endblock contenido %}

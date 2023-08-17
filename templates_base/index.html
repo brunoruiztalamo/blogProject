@@ -40,6 +40,10 @@
                 </li>
             </ul>
         </div>
+        <form class="form-inline" method="GET" action="{% url 'buscar' %}">
+            <input class="form-control form-control-sm mr-2" type="search" name="q" placeholder="Buscar..." aria-label="Buscar">
+            <button class="btn btn-primary btn-sm" type="submit">Buscar</button>
+        </form>
         <div class="dropdown">
             <button class="btn btn-secondary dropdown-toggle text-white" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 <div style="display: inline-block; width: 30px; height: 30px; border-radius: 50%; margin-right: 10px;">

@@ -8,11 +8,11 @@
         By: {{ user_profile.user.first_name }} {{ user_profile.user.last_name }}<br/>
         <p>{{ post.content }}</p>
         <div style="text-align: center; padding: 10px; border: 1px solid #ccc; border-radius: 30px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); margin-top: 10px;">
-            <img src="{{ post_image_url }}" alt="Imagen del post" style="max-width: 100%; height: auto; border-radius: 5px;">
-        </div><br/>
+            <img src="{{ post.image.url }}" alt="Imagen del post" style="max-width: 100%; height: auto; border-radius: 5px;">
+        </div><br/>.
         <div class="text-center">
             <button class="btn btn-secondary">
-                <a href="{% url 'detalle_posts' %}">Volver</a>
+                <a href="{% url 'inicio' %}">Volver al Inicio</a>
             </button>
         </div>
     </div>

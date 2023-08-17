@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views import generic, View
-from django.views.generic import ListView, UpdateView, DeleteView
+from django.views.generic import ListView, UpdateView, DeleteView, DetailView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import LogoutView 
 from django.urls import reverse_lazy
@@ -74,6 +74,20 @@ class ProfileView(View):
         context = {'profile': profile}
         return render(request, self.template_name, context)
 
+
+class UserProfileView(DetailView):
+    model = User
+    template_name = 'ver_perfil.html'
+    context_object_name = 'profile_user'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        profile_user = self.get_object()
+        context['profile'] = Profile.objects.get(user=profile_user)
+        
+        # Obtener la URL de la página anterior
+        context['previous_page'] = self.request.META.get('HTTP_REFERER')
+        return context
 
 #borrar usuario
 class UserDeleteView(LoginRequiredMixin, DeleteView):
