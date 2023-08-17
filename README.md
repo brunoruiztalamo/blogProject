@@ -10,5 +10,5 @@ Ante cualquier duda, les dejo el superuser:
 - Superuser: admin
 - Password: admin
 
-
+Recuerden instalar Pillow y tener siempre la última version de git!
 

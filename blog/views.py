@@ -12,26 +12,21 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 class AboutView(View):
     template_name = 'about.html'
 
+    
     def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
             profile = Profile.objects.get(user=request.user)
             context = {'profile': profile}
             return render(request, self.template_name, context)
+        else:
+            return render(request, self.template_name)
 
 
 #Vista de pag inicio
-class InicioView(LoginRequiredMixin, ListView):
+class InicioView(ListView):
     model = Post
     template_name = 'inicio.html'
     
-    @method_decorator(login_required)
-    def dispatch(self, *args, **kwargs):
-        return super().dispatch(*args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        
-        # Obtener el perfil del usuario logueado
-        profile = Profile.objects.get(user=self.request.user)
-        context['profile'] = profile
-        
         return context
