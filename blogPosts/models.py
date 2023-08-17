@@ -28,8 +28,8 @@ class Post(models.Model):
     header = models.CharField(default = '#subtítulo', max_length=100)
     timestamp = models.DateTimeField(default=timezone.now())
     content = models.TextField(default='#Contenido', max_length=10000, blank=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='posts/')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default='#USER')
+    image = models.ImageField(upload_to='posts/', default="#IMAGE")
     
     def __str__(self):
         return f' {self.title} - Usuario: {self.user}'

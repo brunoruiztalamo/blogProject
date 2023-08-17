@@ -20,6 +20,7 @@
             </div>
             {% endif %}
         </li>
+        {{ post.body|slice:":200" }}
         {% endfor %}
     </ul>
 </div>

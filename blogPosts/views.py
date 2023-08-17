@@ -2,6 +2,8 @@ from .models import Post
 from .forms import formularioEdicion, formularioPost
 from django.views.generic import DetailView, ListView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin
+
 # Create your views here.
 
 
@@ -15,12 +17,15 @@ class PostMain(ListView):
 
 
 #Vista para agregar post
-class AddPostView(CreateView):
+class AddPostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = formularioPost
     template_name = 'formulario_post.html'
-    #fields = '__all__'
-    
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user  # Asignar el usuario actual al campo user
+        return super().form_valid(form)
+
 
 
 #Vista para ver un post

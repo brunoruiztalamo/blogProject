@@ -5,7 +5,7 @@
 <div class="post">
  <h1>{{ post.title }}</h1><br/>
  <small>Fecha: {{ post.timestamp }}</small><br/><br/>
- <small>By: {{ post.user.first_name }} {{ post.user.last.name }} - 
+ <small>By: {{ post.user.first_name }} {{ post.user.last_name }} - 
     {% if user.is_authenticated %}
     <a href="{% url 'editar_post' post.id %}" style="color: blue;">(Editar)</a></small> 
       <small><a href="{% url 'borrar_post' post.id %}" style="color: blue;">(Borrar Post)</a>
