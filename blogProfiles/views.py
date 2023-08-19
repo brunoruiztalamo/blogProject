@@ -58,7 +58,7 @@ class UserView(ListView):
     context_object_name = 'autores'
 
     def get_queryset(self):
-        return Profile.objects.all()
+        return Profile.objects.all().order_by('-user__id')
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -72,8 +72,23 @@ class ProfileView(View):
     template_name = 'miperfil.html'
     
     def get(self, request, *args, **kwargs):
-        profile = Profile.objects.get(user=request.user)
-        context = {'profile': profile}
+        try:
+            # Intenta obtener el perfil del usuario autenticado
+            profile = Profile.objects.get(user=request.user)
+        except Profile.DoesNotExist:
+            # Si no existe, crea un perfil para el usuario actual
+            profile = Profile.objects.create(user=request.user)
+        
+        context = {
+            'profile': profile,
+            'user_avatar_url': profile.get_photo_url,
+            'profile_data': {
+                'first_name': profile.user.first_name,
+                'last_name': profile.user.last_name,
+                # Agregar más campos si es necesario
+            }
+        }
+        
         return render(request, self.template_name, context)
 
 

@@ -3,9 +3,8 @@ from django.views.generic import ListView
 from django.views import View
 from blogPosts.models import Post
 from blogProfiles.models import Profile
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import get_object_or_404
+
 
 
 #Vista de la pagina About
@@ -22,14 +21,21 @@ class AboutView(View):
             return render(request, self.template_name)
 
 
-#Vista de pag inicio
 class InicioView(ListView):
-    model = Post
     template_name = 'inicio.html'
-    
+
     def get(self, request, *args, **kwargs):
         if request.user.is_authenticated:
-            profile = Profile.objects.get(user=request.user)
+            # Filtra los perfiles asociados al usuario actual
+            profiles = Profile.objects.filter(user=request.user)
+            
+            if profiles.exists():
+                # Si existen perfiles, toma el primero (puedes ajustar la lógica si hay más de uno)
+                profile = profiles.first()
+            else:
+                # Si no hay perfiles, puedes crear uno aquí si es necesario
+                profile = Profile.objects.create(user=request.user)
+                
             context = {'profile': profile}
             return render(request, self.template_name, context)
         else:

@@ -89,12 +89,15 @@ class PostListView(LoginRequiredMixin, ListView):
 class SearchView(TemplateView):
     template_name = 'buscar.html'
 
+    def get_queryset(self):
+        return Profile.objects.all().order_by('user__id')
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         query = self.request.GET.get('q')
         
         if query:
-            profile_results = Profile.objects.filter(Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query) | Q(bio__icontains=query)).order_by('-user__date_joined')
+            profile_results = Profile.objects.filter(Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query) | Q(bio__icontains=query)).order_by('user__id')
             post_results = Post.objects.filter(Q(title__icontains=query) | Q(header__icontains=query) | Q(content__icontains=query)).order_by('-pk')
             context['search_results'] = {'profiles': profile_results, 'posts': post_results}
             context['query'] = query
@@ -144,6 +147,9 @@ class PostView(LoginRequiredMixin, DetailView):
     model = Post
     template_name = 'detalle_post.html'
     context_object_name = 'post'
+
+    def get_queryset(self):
+        return Profile.objects.all().order_by('-user__id')
 
     def get_object(self, queryset=None):
         # Obtener el ID del post desde la URL
