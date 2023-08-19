@@ -10,7 +10,7 @@
                     <h2><a style="color: blue;" href="{% url 'detalle_post' post.pk %}">{{ post.title }}</a></h2>
                     <small>Fecha: {{ post.timestamp }}</small><br/>
                     <strong>Encabezado:</strong> {{ post.header }}<br/>
-                    <p>{{ post.content }}</p>
+                    <p>{{ post.content|truncatewords:30 }}</p>  <!-- Aquí se limita a 80 palabras -->
                 </div>
                 <div style="position: absolute; top: 10px; right: 10px;">
                     <img src="{{ post.image.url }}" alt="Imagen del post" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">

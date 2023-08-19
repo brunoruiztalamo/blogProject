@@ -7,6 +7,8 @@ from django.urls import reverse_lazy
 from .models import Profile
 from .forms import ProfileEditForm, UserCustomForm
 from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
+
 
 
 
@@ -75,6 +77,8 @@ class ProfileView(View):
         return render(request, self.template_name, context)
 
 
+
+#Ver el perfil de usuario
 class UserProfileView(DetailView):
     model = User
     template_name = 'ver_perfil.html'
@@ -82,16 +86,17 @@ class UserProfileView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        profile_user = self.get_object()
-        context['profile'] = Profile.objects.get(user=profile_user)
+        profile_user = get_object_or_404(User, pk=self.kwargs['pk'])  
+        profile, created = Profile.objects.get_or_create(user=profile_user)  # Uso get_or_create para evitar el DoesNotExist
+        
+        context['profile'] = profile
         
         # Obtener la URL de la página anterior
         context['previous_page'] = self.request.META.get('HTTP_REFERER')
         return context
 
 
-
-#borrar usuario
+#Borrar usuario
 class UserDeleteView(LoginRequiredMixin, DeleteView):
     model = User  # Cambia el modelo a User
     template_name = 'borrar_usuario.html'

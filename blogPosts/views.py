@@ -6,7 +6,7 @@ from django.urls import reverse_lazy, reverse
 from django.contrib.auth.mixins import LoginRequiredMixin
 from blogProfiles.models import Profile
 from django.db.models import Q
-from django.contrib.auth.models import User
+from django.shortcuts import get_object_or_404
 # Create your views here.
 
 
@@ -62,6 +62,7 @@ class AddPostView(LoginRequiredMixin, CreateView):
         context['profile'] = profile
         return context
     
+    
 
 #Vista para ver mis post
 class PostListView(LoginRequiredMixin, ListView):
@@ -83,7 +84,8 @@ class PostListView(LoginRequiredMixin, ListView):
         return context
 
 
-#Vista para el widget de buscar
+
+# Vista para el widget de buscar
 class SearchView(TemplateView):
     template_name = 'buscar.html'
 
@@ -92,12 +94,13 @@ class SearchView(TemplateView):
         query = self.request.GET.get('q')
         
         if query:
-            profile_results = Profile.objects.filter(Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query) | Q(bio__icontains=query))
-            post_results = Post.objects.filter(Q(title__icontains=query) | Q(header__icontains=query) | Q(content__icontains=query))
+            profile_results = Profile.objects.filter(Q(user__first_name__icontains=query) | Q(user__last_name__icontains=query) | Q(bio__icontains=query)).order_by('-user__date_joined')
+            post_results = Post.objects.filter(Q(title__icontains=query) | Q(header__icontains=query) | Q(content__icontains=query)).order_by('-pk')
             context['search_results'] = {'profiles': profile_results, 'posts': post_results}
             context['query'] = query
         
         return context
+
 
 
 
@@ -133,6 +136,7 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         profile = Profile.objects.get(user=self.request.user)
         context['profile'] = profile
         return context
+
     
     
 #Vista para ver detalle de un post    
@@ -141,15 +145,20 @@ class PostView(LoginRequiredMixin, DetailView):
     template_name = 'detalle_post.html'
     context_object_name = 'post'
 
+    def get_object(self, queryset=None):
+        # Obtener el ID del post desde la URL
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(Post, pk=pk)
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         user_profile = Profile.objects.get(user=self.request.user)
         post = self.object
 
         context['user_profile'] = user_profile
-        context['user_avatar_url'] = user_profile.avatar.url  # Verifica esta línea
+        context['user_avatar_url'] = user_profile.avatar.url
 
-        if post.image:  # Verifica si el post tiene una imagen
+        if post.image:
             context['post_image_url'] = post.image.url
         else:
             context['post_image_url'] = None
@@ -161,8 +170,9 @@ class PostView(LoginRequiredMixin, DetailView):
         }
 
         return context
-
     
+
+
     
  #Vista para ver todos los posts de un usuario   
 class UserPostsListView(LoginRequiredMixin, ListView):

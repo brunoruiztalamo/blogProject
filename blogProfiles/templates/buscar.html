@@ -3,31 +3,32 @@
 
 {% block contenido %}
     <h1>Resultados de búsqueda</h1>
+    <br/><br/>
 
     
     {% if search_results %}
-        <h2>Perfiles</h2>
+        <h2>Perfiles:</h2><br/>
         <div class="card-deck">
             {% for profile in search_results.profiles %}
                 <div class="card" style="width: 18rem; margin: 20px;">
                     <div class="card-body">
                         <h5 class="card-title">{{ profile.user.first_name }} {{ profile.user.last_name }}</h5>
-                        <p class="card-text">{{ profile.bio }}</p>
+                        <p class="card-text">{{ profile.bio|truncatewords:30 }}</p>
                         <small class="text-muted">Email: {{ profile.user.email }}</small>
                         <img src="{{ profile.avatar.url }}" alt="Avatar del perfil" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
                         <a href="{% url 'ver_perfil' profile.pk %}" class="btn btn-secondary">Ver perfil</a>
                     </div>
                 </div>
             {% endfor %}
-        </div>
+        </div><br/><br/>
         
-        <h2>Posts</h2>
+        <h2>Posts:</h2><br/>
         <div class="card-deck">
             {% for post in search_results.posts %}
                 <div class="card" style="width: 18rem; margin: 20px;">
                     <div class="card-body">
                         <h5 class="card-title">{{ post.title }}</h5>
-                        <p class="card-text">{{ post.content }}</p>
+                        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
                         <small class="text-muted">Fecha: {{ post.timestamp }}</small>
                         <img src="{{ post.image.url }}" alt="Imagen del post" style="width: 100%; height: auto;">
                         <a href="{% url 'detalle_post' post.pk %}" class="btn btn-primary">Ver detalle</a>

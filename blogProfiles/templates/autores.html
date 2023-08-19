@@ -11,7 +11,7 @@
                 <strong>Nombre de Usuario:</strong> {{ profile.user.username }}<br/>
                 <strong>Nombre:</strong> {{ profile.user.first_name }}<br/>
                 <strong>Apellido:</strong> {{ profile.user.last_name }}<br/>
-                <strong>Bio:</strong> {{ profile.bio }}<br/>
+                <strong>Bio:</strong> {{ profile.bio|truncatewords:30 }}<br/>
                 <strong>Email:</strong> {{ profile.email }}<br/>
                 <a href="{% url 'posts_list' profile.pk %}"><strong style="color: blue;">Ver Posts</strong></a>
             </div>
