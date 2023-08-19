@@ -42,6 +42,7 @@ class PostMain(ListView):
 
 
 #Vista para agregar post
+# En tu vista de creación de un nuevo post
 class AddPostView(LoginRequiredMixin, CreateView):
     model = Post
     form_class = formularioPost
@@ -49,7 +50,11 @@ class AddPostView(LoginRequiredMixin, CreateView):
     
     def form_valid(self, form):
         form.instance.user = self.request.user
+        
+        form.instance.Category_id = 'category_id'
+        
         form.instance.image = self.request.FILES.get('image')
+        
         response = super().form_valid(form)
         return response
     

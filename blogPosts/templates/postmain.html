@@ -10,9 +10,10 @@
             <div style="flex: 1;">
                 <a href="{% url 'detalle_post' post.id %}" style="text-decoration: none; font-size: 18px; color: blue;"><strong>{{ post.title }}</strong></a><br/>
                 By: {{ post.user.first_name }} {{ post.user.last_name }}<br/>
-                <strong>Encabezado:</strong> {{ post.header }}<br/>
-                <strong>Contenido:</strong> {{ post.content|truncatewords:30 }}<br/>  <!-- Aquí se limita a 80 palabras -->
-                <strong>Fecha:</strong> {{ post.timestamp }}
+                <strong>Encabezado: </strong> {{ post.header }}<br/>
+                <strong>Contenido: </strong> {{ post.content|truncatewords:30 }}<br/>  <!-- Aquí se limita a 80 palabras -->
+                <strong>Fecha: </strong> {{ post.timestamp }}<br/>
+                <strong>Categoría: </strong> {{ post.category }}<br/>
             </div>
             {% if post.image %}
             <div style="flex: 0;">

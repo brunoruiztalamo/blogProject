@@ -5,7 +5,11 @@ from django.utils import timezone
 from django.urls import reverse
 # Create your models here.
 
-
+class Category(models.Model):
+    name = models.CharField(max_length=250, default=None)
+    
+    def __str__(self):
+        return self.name
 
 class Post(models.Model):
     title = models.CharField(default='#Título', max_length=100)
@@ -15,6 +19,8 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, default='#USER')
     image = models.ImageField(upload_to='posts/', default="#IMAGE")
     date = models.DateField(auto_now_add=True)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    
     
     def __str__(self):
         return f' {self.title} - Usuario: {self.user}'

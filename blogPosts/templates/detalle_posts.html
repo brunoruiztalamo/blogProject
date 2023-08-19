@@ -10,7 +10,8 @@
                     <h2><a style="color: blue;" href="{% url 'detalle_post' post.pk %}">{{ post.title }}</a></h2>
                     <small>Fecha: {{ post.timestamp }}</small><br/>
                     By: {{ post.user.first_name }} {{ post.user.last_name }}<br/>
-                    <p>{{ post.content|truncatewords:30 }}</p>  <!-- Aquí se limita a 80 palabras -->
+                    <p>{{ post.content|truncatewords:30 }}</p><br/>  <!-- limitar a 80 palabras -->
+                    <p>{{ post.category }}</p>
                 </div>
                 <div style="position: absolute; top: 10px; right: 10px;">
                     {% if post.image %}

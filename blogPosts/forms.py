@@ -4,13 +4,14 @@ from .models import  Post
 class formularioPost(forms.ModelForm):
     class Meta:
         model = Post
-        fields = ['title', 'header', 'timestamp', 'content', 'image']
+        fields = ['title', 'header', 'timestamp', 'content', 'image', 'category']
         labels = {
             'title': 'Título',
             'header': 'Encabezado',
             'timestamp': 'Fecha y Hora',
             'content': 'Contenido',
             'image': 'Imagen',
+            'category': 'Categoria'
         }
         widgets = {
             'title': forms.TextInput(attrs={'class': 'form-control', 'style': 'font-weight: bold;'}),

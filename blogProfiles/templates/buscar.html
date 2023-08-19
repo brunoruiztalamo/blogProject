@@ -27,7 +27,8 @@
             {% for post in search_results.posts %}
                 <div class="card" style="width: 18rem; margin: 20px;">
                     <div class="card-body">
-                        <h5 class="card-title">{{ post.title }}</h5>
+                        <h5 class="card-title">{{ post.title }}</h5><br/>
+                        <p class="card-text">{{ post.category }}</p>
                         <p class="card-text">{{ post.content|truncatewords:30 }}</p>
                         <small class="text-muted">Fecha: {{ post.timestamp }}</small>
                         <img src="{{ post.image.url }}" alt="Imagen del post" style="width: 100%; height: auto;">
