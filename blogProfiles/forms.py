@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from .models import Profile
 from django.contrib.auth.forms import UserCreationForm
 
+
+#Form para crear perfil en base a User
 class ProfileForm(forms.ModelForm):
     model = Profile
     fields = ['user', 'bio', 'email', 'avatar']
@@ -23,6 +25,7 @@ class ProfileForm(forms.ModelForm):
 
 
 
+#Form para editar perfil
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
@@ -40,6 +43,8 @@ class ProfileEditForm(forms.ModelForm):
         'Avatar': forms.FileInput(attrs={'class': 'form-control'}),
         
         }
+
+
 
 
 #Form para crear los campos completos de usuario

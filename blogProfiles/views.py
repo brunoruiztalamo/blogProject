@@ -111,6 +111,7 @@ class UserProfileView(DetailView):
         return context
 
 
+
 #Borrar usuario
 class UserDeleteView(LoginRequiredMixin, DeleteView):
     model = User  # Cambia el modelo a User

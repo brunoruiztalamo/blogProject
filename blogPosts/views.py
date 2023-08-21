@@ -1,12 +1,11 @@
-from django.shortcuts import render
-from .models import Post
+from .models import Post, Category
 from .forms import formularioEdicion, formularioPost
-from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy, reverse
-from django.contrib.auth.mixins import LoginRequiredMixin
 from blogProfiles.models import Profile
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Q
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, render
+from django.urls import reverse_lazy, reverse
+from django.views.generic import TemplateView, DetailView, ListView, CreateView, UpdateView, DeleteView
 # Create your views here.
 
 
@@ -184,7 +183,6 @@ class PostView(LoginRequiredMixin, DetailView):
     
 
 
-    
  #Vista para ver todos los posts de un usuario   
 class UserPostsListView(LoginRequiredMixin, ListView):
     template_name = 'posts_list.html'
@@ -198,3 +196,21 @@ class UserPostsListView(LoginRequiredMixin, ListView):
         context = super().get_context_data(**kwargs)
         context['profile'] = Profile.objects.get(user=self.request.user)
         return context
+
+
+#Vista para agregar categoria
+class AddCategoryView(LoginRequiredMixin, CreateView):
+    model = Category
+    template_name = 'agregar_categoria.html'
+    fields = ['name']
+    
+    
+#Vista para ver categorias
+def CategoryView(request, cats):
+    # Busca el objeto Category con el nombre 'cats', devuelve un 404 si no existe
+    category = get_object_or_404(Category, name=cats)
+
+    # Filtrar Post relacionados con categoria
+    category_posts = Post.objects.filter(category=category)
+
+    return render(request, 'categorias.html', {'cats': cats, 'category_posts': category_posts})
