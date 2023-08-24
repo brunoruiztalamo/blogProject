@@ -10,7 +10,7 @@
                 <img src="{{ profile.avatar.url }}" alt="Avatar" style="width: 150px; height: 150px; border-radius: 50%;">
             </div>
             <div>
-                <p><strong>Nombre de Usuario:</strong> {{ user.username }}</p>
+                <p><strong>Nombre de Usuario:</strong> "<strong>{{ user.username }}</strong>"</p>
                 <p><strong>Nombre:</strong> {{ user.first_name }}</p>
                 <p><strong>Apellido:</strong> {{ user.last_name }}</p>
                 <p><strong>Correo electrónico:</strong> {{ user.email }}</p>

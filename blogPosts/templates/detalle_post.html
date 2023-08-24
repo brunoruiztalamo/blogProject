@@ -6,8 +6,9 @@
         <h1>{{ post.title }}</h1>
         <small>Fecha: {{ post.timestamp }}</small><br/>
         By: {{ user_profile.user.first_name }} {{ user_profile.user.last_name }}<br/>
+        <p><strong>Categoría: </strong>{{ post.category }}</p>
+        <p><strong>Contenido: </strong></p>
         <p>{{ post.content }}</p><br/>
-        <p>{{ post.category }}</p>
         <div style="text-align: center; padding: 10px; border: 1px solid #ccc; border-radius: 30px; box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); margin-top: 10px;">
             {% if post.image %}
                 <img src="{{ post.image.url }}" alt="Imagen del post" style="max-width: 100%; height: auto; border-radius: 5px;">

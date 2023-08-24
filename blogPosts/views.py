@@ -110,7 +110,6 @@ class SearchView(TemplateView):
 
 
 
-
 # Vista para borrar post
 class PostDeleteView(LoginRequiredMixin, DeleteView):
     model = Post
@@ -144,7 +143,8 @@ class PostUpdateView(LoginRequiredMixin, UpdateView):
         context['profile'] = profile
         return context
 
-    
+
+
     
 #Vista para ver detalle de un post    
 class PostView(LoginRequiredMixin, DetailView):
@@ -187,15 +187,20 @@ class PostView(LoginRequiredMixin, DetailView):
 class UserPostsListView(LoginRequiredMixin, ListView):
     template_name = 'posts_list.html'
     context_object_name = 'posts_list'
+
     #paginate_by = 10  # Opcional: para paginación si hay muchos 
 
     def get_queryset(self):
         return Post.objects.filter(user=self.request.user)
 
-    def get_context_data(self, **kwargs):
+    def get_context_data(self, request, **kwargs):
+        user_profile = Profile.objects.get(user=request.user)
         context = super().get_context_data(**kwargs)
         context['profile'] = Profile.objects.get(user=self.request.user)
+        context['user_profile'] = user_profile
+        context['user_avatar_url'] = user_profile.avatar.url
         return context
+
 
 
 #Vista para agregar categoria
@@ -205,12 +210,14 @@ class AddCategoryView(LoginRequiredMixin, CreateView):
     fields = ['name']
     
     
-#Vista para ver categorias
+    
+#Vista para ver categorias (Es mas practico usar una funcion antes de una clase en este caso)
 def CategoryView(request, cats):
     # Busca el objeto Category con el nombre 'cats', devuelve un 404 si no existe
     category = get_object_or_404(Category, name=cats)
-
     # Filtrar Post relacionados con categoria
     category_posts = Post.objects.filter(category=category)
-
+    
     return render(request, 'categorias.html', {'cats': cats, 'category_posts': category_posts})
+
+

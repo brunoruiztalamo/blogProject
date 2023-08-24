@@ -14,7 +14,6 @@ urlpatterns = [
     path('buscar/', SearchView.as_view(), name='buscar'),
     path('agregar_categoria', AddCategoryView.as_view, name='agregar_categoria'),
     path('categoria/<str:cats>', CategoryView, name='categoria' ),
-
 ] 
 
 

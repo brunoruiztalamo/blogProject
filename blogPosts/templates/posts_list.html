@@ -11,7 +11,7 @@
                     <small>Fecha: {{ post.timestamp }}</small><br/>
                     <strong>Encabezado:</strong> {{ post.header }}<br/>
                     <p>{{ post.content|truncatewords:30 }}</p><br/>
-                    <p>{{ post.category }}</p>
+                    <p>Categoria: <a href="{% url 'categoria' post.category %}">{{ post.category }}</a></p>
                 </div>
                 <div style="position: absolute; top: 10px; right: 10px;">
                     <img src="{{ post.image.url }}" alt="Imagen del post" style="width: 50px; height: 50px; object-fit: cover; border-radius: 50%;">
