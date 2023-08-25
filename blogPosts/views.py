@@ -169,11 +169,15 @@ class PostView(LoginRequiredMixin, DetailView):
         total_likes = post_by_id.total_likes()
         post = Post.objects.get(user=self.request.user)
         
+        liked = False
+        if post_by_id.likes.filter(id=self.request.user.id).exists():
+            liked = True
 
         context['user_profile'] = user_profile
         context['user_avatar_url'] = user_profile.avatar.url
         context['cat_menu'] = cat_menu
         context['total_likes'] = total_likes
+        context['liked'] = liked
         if post.image:
             context['post_image_url'] = post.image.url
         else:
@@ -217,7 +221,7 @@ class AddCategoryView(LoginRequiredMixin, CreateView):
     
     
     
-#Vista para ver categorias (Es mas practico usar una funcion antes de una clase en este caso)
+#Vista para ver categorias
 def CategoryView(request, cats):
     # Busca el objeto Category con el nombre 'cats', devuelve un 404 si no existe
     category = get_object_or_404(Category, name=cats)
@@ -227,8 +231,15 @@ def CategoryView(request, cats):
     return render(request, 'categorias.html', {'cats': cats, 'category_posts': category_posts})
 
 
+
 #Vista para likes
 def LikeView(request, pk):
     post = get_object_or_404(Post, id=request.POST.get('post_id'))
-    post.likes.add(request.user)
+    if post.likes.filter(id=request.user.id).exists():
+        post.likes.remove(request.user)
+        liked = False
+    else:
+        post.likes.add(request.user)
+        liked = True
+
     return HttpResponseRedirect(reverse('detalle_post', args=[str(pk)]))
