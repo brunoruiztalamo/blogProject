@@ -20,6 +20,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='posts/', default="#IMAGE")
     date = models.DateField(auto_now_add=True)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(User, related_name='blog_posts')
     
     
     def __str__(self):
@@ -28,7 +29,8 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse('detalle_post', kwargs={'pk': self.pk})
     
-
+    def total_likes(self):
+        return self.likes.count()
 
 
 

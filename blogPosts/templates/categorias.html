@@ -1,7 +1,8 @@
 {% extends "index.html" %}
 {% load static %}
 
-<h1>Categorias:</h1>
+
+<h1>{{ cats }}</h1>
 
 {% block contenido %}
 
@@ -23,9 +24,7 @@
         <div style="flex: 0;">
             <img src="{{ post.image.url }}" alt="Imagen del post" style="max-width: 100px; max-height: 100px; border-radius: 5px;">
         </div>
-            {% else %}
-            <h2>Lo sentimos, esta página no existe.</h2>
-            {% endif %}
+        {% endif %}
     </li>
     {{ post.body|slice:":200" }}
     {% endfor %}

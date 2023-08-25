@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import AddPostView, PostListView, PostView, PostMain, PostUpdateView, UserPostsListView, PostDeleteView, SearchView, AddCategoryView, CategoryView
+from .views import AddPostView, PostListView, PostView, PostMain, PostUpdateView, UserPostsListView, PostDeleteView, SearchView, AddCategoryView, CategoryView, LikeView
 
 
 
@@ -14,6 +14,8 @@ urlpatterns = [
     path('buscar/', SearchView.as_view(), name='buscar'),
     path('agregar_categoria', AddCategoryView.as_view, name='agregar_categoria'),
     path('categoria/<str:cats>', CategoryView, name='categoria' ),
+    path('like/<int:pk>', LikeView, name='like_post'),
+
 ] 
 
 
